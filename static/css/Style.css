@@ -1,0 +1,66 @@
+body {
+    font-size: 12px;
+}
+
+input {
+    width: 185px;
+    height: 24px;
+}
+
+select {
+    width: 200px;
+    height: 24px;
+}
+
+select:required:invalid {
+    color: #666;
+}
+
+option[value=""][disabled] {
+    display: none;
+}
+
+option {
+    max-width: 200px;
+    color: #000;
+}
+
+fieldset {
+    margin: 0px 5px;
+}
+
+fieldset legend{
+    font-size: 12px;
+    margin-left: 5px;
+}
+
+fieldset legend button{
+    font-size: 12px !important;
+    margin-left: 5px;
+}
+
+fieldset div{
+    margin-top: -15px;
+}
+
+.explanation{
+    width: 37.3%;
+}
+
+textarea{
+    width: 55%;
+}
+
+.loading{
+    display: none;
+}
+
+ol{
+    margin-left: -10px;
+    margin-bottom: 0px;
+}
+
+li{
+    margin-top: 4px;
+    margin-bottom: 7px;
+}

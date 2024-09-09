@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MITW - ECG Viewer</title>
+  <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='node_modules/bootstrap/dist/css/bootstrap.min.css') }}" />
+  <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='node_modules/@fortawesome/fontawesome-free/css/all.css') }}" />
+  <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/Style.css') }}" />
+  <script src="{{ url_for('static', filename='node_modules/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='../static/js/Script.js') }}"></script>
+</head>
+<body>
+  <div class="d-inline-flex">
+    <div>
+      <fieldset class="w-auto p-2 border border-dark validPatient">
+        <legend class="float-none w-auto p-2">
+          FHIR Server
+        </legend>
+        <div class="d-flex align-items-baseline">
+          URL = 
+          <input type="text" class="m-1" id="serverURL" placeholder="FHIR Base Link" required>
+          &emsp;
+          Bearer Token = 
+          <textarea class="m-1" id="bearerToken" rows="1" placeholder="Token Keys..."></textarea>
+        </div>
+      </fieldset>
+      <fieldset class="w-auto p-2 border border-dark">
+        <legend class="d-inline-flex float-none w-auto p-2 align-items-baseline">
+          Patient Search Paraments
+          <button type="button" class="btn btn-success p-1 d-flex" onclick="searchPat()">
+            <span class="fa-solid fa-magnifying-glass icon"></span>
+            <span class="spinner-border spinner-border-sm loading" role="status" aria-hidden="true"></span>
+          </button>
+        </legend>
+        <div>
+          identifier = 
+          <input type="text" class="m-1" id="patIdenSystem" placeholder="patient.identifier.system">
+          |
+          <input type="text" class="m-1" id="patIdenCode" placeholder="patient.identifier.code">
+          &
+          organization = 
+          <input type="text" class="m-1" id="patOrganization" placeholder="patient.managingOrganization" required>
+        </div>
+      </fieldset>
+      <fieldset class="w-auto p-2 border border-dark">
+        <legend class="d-inline-flex float-none w-auto p-2 align-items-baseline">
+          Observation Search Paraments
+        </legend>
+        <div>
+          subject = 
+          <select class="m-1" id="observSubject" onChange="searchObservSubject()" required>
+            <option value="" disabled selected>patient.id</option>
+          </select>
+          &
+          date = 
+          <select class="m-1" id="observDateTime" onChange="searchObservDateTime()" required>
+            <option value="" disabled selected>observation.effectiveDateTime</option>
+          </select>
+        </div>
+      </fieldset>
+    </div>
+    <div class="explanation">
+      <fieldset class="w-auto p-2 border border-dark">
+        <legend class="d-inline-flex float-none w-auto p-2 align-items-baseline">
+          說明
+        </legend>
+        <div>
+          <ol>
+            <li>輸入 FHIR Server 的 Base URL。Bearer Token 為選填。</li>
+            <li>輸入 patient.identifier 與 patient.organization，點選搜尋鍵，系統會將所有符合的 patient.id 新增至下拉式選單中。</li>
+            <li>選擇 patient.id，系統會直接搜尋出該病患所有的心電圖紀錄時間 observation.effectiveDateTime，並新增至下拉式選單中。</li>
+            <li>選擇 effectiveDateTime，即可看到該時間點的心電圖如下。</li>
+            <li>選擇 此心電圖格線的一小格為 1 mm x 1 mm。25 mm/sec；10 mm/mV。</li>
+            <li>電壓範圍：± 3 mV；最長顯示 10 秒。</li>
+          </ol>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+  <div class="w-100 p-2">
+    <canvas class="w-100 border border-black bg-white" id="131329" name="I"></canvas>
+    <canvas class="w-100 border border-black bg-white" id="131330" name="II"></canvas>
+    <canvas class="w-100 border border-black bg-white" id="131389" name="III"></canvas>
+    <canvas class="w-100 border border-black bg-white" id="131390" name="AVR"></canvas>
+    <canvas class="w-100 border border-black bg-white" id="131391" name="AVL"></canvas>
+    <canvas class="w-100 border border-black bg-white" id="131392" name="AVF"></canvas>
+    <canvas class="w-100 border border-black bg-white" id="131331" name="V1"></canvas>
+    <canvas class="w-100 border border-black bg-white" id="131332" name="V2"></canvas>
+    <canvas class="w-100 border border-black bg-white" id="131333" name="V3"></canvas>
+    <canvas class="w-100 border border-black bg-white" id="131334" name="V4"></canvas>
+    <canvas class="w-100 border border-black bg-white" id="131335" name="V5"></canvas>
+    <canvas class="w-100 border border-black bg-white" id="131336" name="V6"></canvas>
+  </div>
+
+  <div class="modal modal-sm" tabindex="-1" id="hintHandle">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body text-center" id="Hint">
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
