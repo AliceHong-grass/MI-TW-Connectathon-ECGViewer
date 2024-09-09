@@ -41,10 +41,7 @@ fieldset legend button{
 
 fieldset div{
     margin-top: -15px;
-}
-
-.explanation{
-    width: 37.3%;
+    text-wrap: nowrap;
 }
 
 textarea{
@@ -63,4 +60,5 @@ ol{
 li{
     margin-top: 4px;
     margin-bottom: 7px;
+    white-space: normal;
 }

@@ -11,15 +11,15 @@
   <script type="text/javascript" src="{{ url_for('static', filename='../static/js/Script.js') }}"></script>
 </head>
 <body>
-  <div class="d-inline-flex">
-    <div>
+  <div class="row">
+    <div class="col pe-0">
       <fieldset class="w-auto p-2 border border-dark validPatient">
         <legend class="float-none w-auto p-2">
           FHIR Server
         </legend>
         <div class="d-flex align-items-baseline">
           URL = 
-          <input type="text" class="m-1" id="serverURL" placeholder="FHIR Base Link" required>
+          <input type="text" class="m-1" id="serverURL" placeholder="FHIR Base Link" value="https://fhir.dicom.tw/fhir" required>
           &emsp;
           Bearer Token = 
           <textarea class="m-1" id="bearerToken" rows="1" placeholder="Token Keys..."></textarea>
@@ -35,12 +35,10 @@
         </legend>
         <div>
           identifier = 
-          <input type="text" class="m-1" id="patIdenSystem" placeholder="patient.identifier.system">
-          |
-          <input type="text" class="m-1" id="patIdenCode" placeholder="patient.identifier.code">
+          <input type="text" class="m-1" id="patIdenValue" placeholder="patient.identifier.value" value="D170925591" required>
           &
           organization = 
-          <input type="text" class="m-1" id="patOrganization" placeholder="patient.managingOrganization" required>
+          <input type="text" class="m-1" id="patOrganization" placeholder="patient.managingOrganization" value="MITW.ForIdentifier" required>
         </div>
       </fieldset>
       <fieldset class="w-auto p-2 border border-dark">
@@ -60,8 +58,8 @@
         </div>
       </fieldset>
     </div>
-    <div class="explanation">
-      <fieldset class="w-auto p-2 border border-dark">
+    <div class="col-5 ps-0">
+      <fieldset class="w-auto p-2 border border-dark h-100">
         <legend class="d-inline-flex float-none w-auto p-2 align-items-baseline">
           說明
         </legend>

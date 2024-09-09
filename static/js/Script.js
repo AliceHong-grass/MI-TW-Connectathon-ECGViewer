@@ -122,8 +122,7 @@ async function searchPat(){
             body: JSON.stringify({
                 serverURL:document.getElementById("serverURL").value.trim(),
                 bearerToken:document.getElementById("bearerToken").value.trim(),
-                idenSystem:document.getElementById("patIdenSystem").value.trim(),
-                idenCode:document.getElementById("patIdenCode").value.trim(),
+                idenValue:document.getElementById("patIdenValue").value.trim(),
                 organization:document.getElementById("patOrganization").value.trim()
             })
         })

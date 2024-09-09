@@ -2,6 +2,13 @@ from flask import Flask, request
 from flask import render_template
 app = Flask(__name__)
 
+def is_empty(value):
+    if value is None:
+        return True
+    if isinstance(value, (str, list, tuple, set, dict)):
+        return len(value) == 0
+    return False
+
 @app.route('/ecgviewer', methods = ["GET"])
 def ecgviewer():
     return render_template('Viewer.html')
@@ -10,9 +17,14 @@ def ecgviewer():
 def SearchPat():
     import json
     requestBody = json.loads(request.data)
-    api_url = ( requestBody['serverURL'] + '/Patient' + 
-               '?identifier=' + requestBody['idenSystem'] + '|' + requestBody['idenCode'] +
-               '&organization=' + requestBody['organization'] )
+    api_url = requestBody['serverURL'] + '/Patient'
+    if is_empty(requestBody['idenValue']) is False: 
+        api_url += '?identifier=' + requestBody['idenValue']
+        if is_empty(requestBody['organization']) is False: 
+            api_url += '&organization=' + requestBody['organization']
+    else:
+        if is_empty(requestBody['organization']) is False: 
+            api_url += '?organization=' + requestBody['organization']
     headers = {'Authorization': 'Bearer ' + requestBody['bearerToken']}
     import requests
     pats = requests.get(api_url, headers=headers).json()
@@ -31,7 +43,7 @@ def SearchObservSubject():
 
     api_url = ( requestBody['serverURL'] + '/Observation' + 
             '?subject=' + requestBody['subject'] +
-            '&code=urn:oid:2.16.840.1.113883.6.24|131328' )
+            '&code=131328' )
     headers = {'Authorization': 'Bearer ' + requestBody['bearerToken']}
     import requests
     observs = requests.get(api_url, headers=headers).json()
@@ -51,7 +63,7 @@ def SearchObservDateTime():
 
     api_url = ( requestBody['serverURL'] + '/Observation' + 
             '?subject=' + requestBody['subject'] +
-            '&code=urn:oid:2.16.840.1.113883.6.24|131328' + 
+            '&code=131328' + 
             '&date=' + requestBody['dateTime'])
     headers = {'Authorization': 'Bearer ' + requestBody['bearerToken']}
     import requests
