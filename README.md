@@ -1,5 +1,4 @@
 # MI-TW-Connectathon-ECGViewer
-[*DEMO站*](https://smallgrass0220.pythonanywhere.com/ecgviewer)
 
 ## Windows CMD
 1. cd 到專案資料夾
